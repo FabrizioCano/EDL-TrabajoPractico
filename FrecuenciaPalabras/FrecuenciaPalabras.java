@@ -7,15 +7,16 @@ import java.util.PriorityQueue;
 import java.util.Comparator;
 
 public class FrecuenciaPalabras {
-
+   
     public static void main(String[] args) {
+        final Integer PAL = 10;
         String arch = "texto.txt";
         Map<String, Integer> contador_palabra = new HashMap<>();
         //leer el archivo de palabras y agregarlas al hashmap
         try (BufferedReader br = new BufferedReader(new FileReader(arch))) {
             String linea;
             while ((linea = br.readLine()) != null) {
-                String[] palabras = linea.split("\\W+");
+                String[] palabras = linea.split(" ");
                 for (String palabra : palabras) {
                     if (palabra.isEmpty()){
                         continue; 
@@ -40,8 +41,8 @@ public class FrecuenciaPalabras {
 
         cola.addAll(contador_palabra.entrySet());
 
-        System.out.println("Las 10 palabras más frecuentes son:");
-        for (int i = 0; i < 10 && !cola.isEmpty(); i++) {
+        System.out.printf("Las %d palabras mas frecuentes son:\n",PAL);
+        for (int i = 0; i < PAL && !cola.isEmpty(); i++) {
             Map.Entry<String, Integer> entry = cola.poll();
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }

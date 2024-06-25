@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #define MAX_LONG 100
-
+#define PAL 10
 
 typedef struct Palabras {
     /* arreglo que contendra la palabra */
@@ -75,13 +76,20 @@ void ordenar_lista() {
 void imprimir_lista(){
     NodoPalabra *imprimir;
     int k=0;
+    printf("Las %d palabras mas frecuentes son\n",PAL);
     for(imprimir=head;imprimir!=NULL;imprimir=imprimir->siguiente){
         printf("%s: %d\n",imprimir->diccionario.palabra, imprimir->diccionario.cantidad);
         k++;
-        if(k==10){
+        if(k==PAL){
             break;
         }
     }
+}
+char* minuscula(char *palabra) {
+    for(int c=0;palabra[c]!= '\0';c++) {
+        palabra[c]=tolower(palabra[c]);
+    }
+    return palabra;
 }
 int main() {
 
@@ -99,8 +107,8 @@ int main() {
 /* mientras exista palabra que leer */
     while(!feof(archivo)){
         fscanf(archivo,"%s",palabra_leida);
-
-        insertar_palabra(palabra_leida);
+        char *pal_aux=minuscula(palabra_leida);
+        insertar_palabra(pal_aux);
     }
 
     fclose(archivo);
